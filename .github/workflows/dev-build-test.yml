@@ -1,0 +1,9 @@
+name: "Dev - Build and Test"
+
+on: [pull_request]
+
+jobs:
+  build:
+    runs-on: self-hosted
+    steps:
+      - run: dotnet build
