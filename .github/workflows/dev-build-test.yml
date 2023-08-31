@@ -6,4 +6,5 @@ jobs:
   build:
     runs-on: self-hosted
     steps:
-      - run: dotnet build
+        - uses: actions/checkout@v3
+        - run: dotnet build
