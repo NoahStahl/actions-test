@@ -23,6 +23,6 @@ jobs:
       - uses: actions/download-artifact@v3
         with:
           name: build-run-${{ github.run_id }}
-          path: download
+          path: download.zip
       - name: Display structure of downloaded files
-        run: ls -R
+        run: ls
