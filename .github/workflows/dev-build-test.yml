@@ -18,10 +18,10 @@ jobs:
           path: artifacts.zip
   deploy:
     runs-on: self-hosted
+    needs: build
     steps:
       - uses: actions/download-artifact@v3
         with:
           name: build-run-${{ github.run_id }}
       - name: Display structure of downloaded files
         run: ls -R
-        
