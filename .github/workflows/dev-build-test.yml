@@ -6,14 +6,22 @@ jobs:
   build:
     runs-on: self-hosted
     steps:
-        - uses: actions/checkout@v3
-        - run: dotnet restore
-        - name: Publish
-          run: dotnet publish ActionsTest.WebApp -c Release -o artifacts/ActionsTest.WebApp
-        - name: Zip artifacts
-          run: zip -r artifacts.zip artifacts
-        - uses: actions/upload-artifact@v3
-          with:
-            name: artifacts-${{ github.run_id }}
-            path: artifacts.zip
-            
+      - uses: actions/checkout@v3
+      - run: dotnet restore
+      - name: Publish
+        run: dotnet publish ActionsTest.WebApp -c Release -o artifacts/ActionsTest.WebApp
+      - name: Zip artifacts
+        run: zip -r artifacts.zip artifacts
+      - uses: actions/upload-artifact@v3
+        with:
+          name: build-run-${{ github.run_id }}
+          path: artifacts.zip
+  deploy:
+    runs-on: self-hosted
+    steps:
+      - uses: actions/download-artifact@v3
+        with:
+          name: build-run-${{ github.run_id }}
+      - name: Display structure of downloaded files
+        run: ls -R
+        
