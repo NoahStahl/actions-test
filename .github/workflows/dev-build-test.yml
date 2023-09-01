@@ -14,6 +14,5 @@ jobs:
           run: zip -r artifacts.zip artifacts
         - uses: actions/upload-artifact@v3
           with:
-            name: build-artifacts
-            path: artifacts.zip
+            path: artifacts-${{ github.run_id }}.zip
             
