@@ -370,3 +370,4 @@ web.min.css
 *.vsidx
 
 /BuildArtifacts
+/.vs
