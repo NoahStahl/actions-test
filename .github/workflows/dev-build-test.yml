@@ -10,8 +10,10 @@ jobs:
         - run: dotnet restore
         - name: Publish
           run: dotnet publish ActionsTest.WebApp -c Release -o artifacts/ActionsTest.WebApp
+        - name: Zip artifacts
+          run: zip -r artifacts.zip artifacts
         - uses: actions/upload-artifact@v3
           with:
             name: build-artifacts
-            path: artifacts
+            path: artifacts.zip
             
