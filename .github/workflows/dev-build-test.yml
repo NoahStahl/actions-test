@@ -2,6 +2,9 @@ name: "Dev - Build and Test"
 
 on: [push, workflow_dispatch]
 
+env:
+  ARTIFACT_NAME: build-run-${{ github.run_id }}
+
 jobs:
   build:
     runs-on: self-hosted
@@ -11,18 +14,21 @@ jobs:
       - name: Publish
         run: dotnet publish ActionsTest.WebApp -c Release -o artifacts/ActionsTest.WebApp
       - name: Zip artifacts
-        run: zip -r artifacts.zip artifacts
+        run: Compress-Archive artifacts/* artifacts.zip
+        shell: pwsh
       - uses: actions/upload-artifact@v3
         with:
-          name: build-run-${{ github.run_id }}
+          name: ${{ env.ARTIFACT_NAME }}
           path: artifacts.zip
+          retention-days: 30
   deploy:
     runs-on: self-hosted
     needs: build
     steps:
       - uses: actions/download-artifact@v3
         with:
-          name: build-run-${{ github.run_id }}
-          path: download.zip
-      - name: Display structure of downloaded files
-        run: ls
+          name: ${{ env.ARTIFACT_NAME }}
+          path: download
+      - name: Unzip artifacts
+        run: Expand-Archive artifacts.zip artifacts-download
+        shell: pwsh
