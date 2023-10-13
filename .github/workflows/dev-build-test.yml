@@ -12,7 +12,7 @@ jobs:
       - uses: actions/checkout@v3
       - name: Send slack
         run: >- 
-          curl -X POST -H 'Content-type: application/json' --data '{"text":"From GitHub"}' https://hooks.slack.com/services/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
+          curl -X POST -H 'Content-type: application/json' --data '{"text":"From runner"}' https://hooks.slack.com/services/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
 
   # build:
   #   runs-on: self-hosted
