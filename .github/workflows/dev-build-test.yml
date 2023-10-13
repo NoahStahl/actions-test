@@ -11,8 +11,10 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Send slack
-        run: >- 
-          curl -X POST -H 'Content-type: application/json' --data '{"text":"From runner"}' https://hooks.slack.com/services/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
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        run: |
+          curl -X POST -H 'Content-type: application/json' --data '{"text":"From runner"}' "$SLACK_WEBHOOK_URL"
 
   # build:
   #   runs-on: self-hosted
