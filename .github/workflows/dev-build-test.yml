@@ -10,11 +10,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Send slack
-        env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      - name: Do thing
         run: |
-          curl -X POST -H 'Content-type: application/json' --data '{"text":"From runner"}' "$SLACK_WEBHOOK_URL"
+          echo running
+
 
   # build:
   #   runs-on: self-hosted
