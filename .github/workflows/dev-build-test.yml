@@ -6,32 +6,37 @@ env:
   ARTIFACT_NAME: build-run-${{ github.run_id }}
 
 jobs:
-  build:
+  test:
     runs-on: self-hosted
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/setup-dotnet@v3
-        with:
-          dotnet-version: '6.0.x'
-      - run: dotnet restore
-      - name: Publish
-        run: dotnet publish ActionsTest.WebApp -c Release -o artifacts/ActionsTest.WebApp
-      - name: Zip artifacts
-        run: Compress-Archive artifacts/* artifacts.zip
-        shell: pwsh
-      - uses: actions/upload-artifact@v3
-        with:
-          name: ${{ env.ARTIFACT_NAME }}
-          path: artifacts.zip
-          retention-days: 30
-  deploy:
-    runs-on: self-hosted
-    needs: build
-    steps:
-      - uses: actions/download-artifact@v3
-        with:
-          name: ${{ env.ARTIFACT_NAME }}
-          path: download
-      - name: Unzip artifacts
-        run: Expand-Archive artifacts.zip artifacts-download
-        shell: pwsh
+      - name: Send slack
+        run: >- 
+          curl -X POST -H 'Content-type: application/json' --data '{"text":"From GitHub"}' https://hooks.slack.com/services/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
+
+  # build:
+  #   runs-on: self-hosted
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #     - run: dotnet restore
+  #     - name: Publish
+  #       run: dotnet publish ActionsTest.WebApp -c Release -o artifacts/ActionsTest.WebApp
+  #     - name: Zip artifacts
+  #       run: Compress-Archive artifacts/* artifacts.zip
+  #       shell: pwsh
+  #     - uses: actions/upload-artifact@v3
+  #       with:
+  #         name: ${{ env.ARTIFACT_NAME }}
+  #         path: artifacts.zip
+  #         retention-days: 30
+  # deploy:
+  #   runs-on: self-hosted
+  #   needs: build
+  #   steps:
+  #     - uses: actions/download-artifact@v3
+  #       with:
+  #         name: ${{ env.ARTIFACT_NAME }}
+  #         path: download
+  #     - name: Unzip artifacts
+  #       run: Expand-Archive artifacts.zip artifacts-download
+  #       shell: pwsh
