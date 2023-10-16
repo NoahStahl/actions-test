@@ -25,8 +25,11 @@ jobs:
           commit="${{github.event.workflow_run.head_commit.message}}"
           runUrl="${{github.server_url}}/${{github.repository}}/actions/runs/${{github.event.workflow_run.id}}"
           text="Workflow [$workflow] result was [$result]. Triggered by $user with [$commit]. <$runUrl|View Details>"
+          payload="{'text': $text}"
           echo $text
-          curl -X POST -H 'Content-type: application/json' --data '{"text":"$text"}' $SLACK_WEBHOOK_URL
+          echo $payload
+          
+      #curl -X POST -H 'Content-type: application/json' --data '{"text":"$text"}' $SLACK_WEBHOOK_URL
 
       # - uses: ravsamhq/notify-slack-action@v2
       #   with:
