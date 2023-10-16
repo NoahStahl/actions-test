@@ -14,9 +14,9 @@ jobs:
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
         run: |
-          echo ${{github.event.workflow_run.name}}
-          echo ${{github.event.workflow_run.conclusion}}
-          echo <${{github.server_url}}/${{github.repository}}/actions/runs/${{github.event.workflow_run.id}}|View Failure>"}'  
+          echo run name: ${{github.event.workflow_run.name}}
+          echo conclusiom: ${{github.event.workflow_run.conclusion}}
+          echo link: ${{github.server_url}}/${{github.repository}}/actions/runs/${{github.event.workflow_run.id}}
         
 # curl -X POST -H 'Content-type: application/json' --data '{"text":"GitHub job failure: <${{github.server_url}}/${{github.repository}}/actions/runs/${{github.event.workflow_run.id}}|View Failure>"}'  
 
