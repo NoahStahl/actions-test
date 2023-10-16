@@ -28,7 +28,7 @@ jobs:
           data='{"text": "'$text'"}'
           echo $text
           echo $data
-          curl -X POST -H 'Content-Type: application/json' --data $data $SLACK_WEBHOOK_URL
+          curl -X POST -H 'Content-Type: application/json' --data '$data' $SLACK_WEBHOOK_URL
           
       #curl -X POST -H 'Content-type: application/json' --data '{"text":"$text"}' $SLACK_WEBHOOK_URL
 
