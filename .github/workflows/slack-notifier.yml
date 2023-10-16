@@ -14,13 +14,13 @@ jobs:
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
           GITHUB_CONTEXT: ${{ toJson(github) }}
+          COMMITTER_NAME: ${{github.event.workflow_run.head_commit.committer.name}}
+          COMMIT_MESSAGE: ${{github.event.workflow_run.head_commit.message}}
+          WORKFLOW_CONCLUSION: ${{github.event.workflow_run.conclusion}}
+          WORKFLOW_NAME: ${{github.event.workflow_run.name}}
         run: |
-          echo user: ${{github.event.workflow_run.head_commit.committer.name}}
-          echo commit message: ${{github.event.workflow_run.head_commit.message}}
-          echo run name: ${{github.event.workflow_run.name}}
-          echo conclusiom: ${{github.event.workflow_run.conclusion}}
-          echo link: ${{github.server_url}}/${{github.repository}}/actions/runs/${{github.event.workflow_run.id}}
-          echo "$GITHUB_CONTEXT"
+          runUrl=${{github.server_url}}/${{github.repository}}/actions/runs/${{github.event.workflow_run.id}}
+          echo Workflow "$WORKFLOW_NAME" resulted with ["WORKFLOW_CONCLUSION"]. Triggered by "$COMMITTER_NAME" with "$COMMIT_MESSAGE". Run details: $runUrl
         
 # curl -X POST -H 'Content-type: application/json' --data '{"text":"GitHub job failure: <${{github.server_url}}/${{github.repository}}/actions/runs/${{github.event.workflow_run.id}}|View Failure>"}'  
 
