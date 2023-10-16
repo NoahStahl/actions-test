@@ -22,11 +22,11 @@ jobs:
           workflow="${{github.event.workflow_run.name}}"
           result="${{github.event.workflow_run.conclusion}}"
           user="${{github.event.workflow_run.head_commit.committer.name}}"
-          message="${{github.event.workflow_run.head_commit.message}}"
+          commit="${{github.event.workflow_run.head_commit.message}}"
           runUrl="${{github.server_url}}/${{github.repository}}/actions/runs/${{github.event.workflow_run.id}}"
-          echo Workflow $workflow result was [$result]. Triggered by $user with $message. Run details: $runUrl
-        
-# curl -X POST -H 'Content-type: application/json' --data '{"text":"GitHub job failure: <${{github.server_url}}/${{github.repository}}/actions/runs/${{github.event.workflow_run.id}}|View Failure>"}'  
+          text="Workflow [$workflow] result was [$result]. Triggered by $user with [$commit]. <$runUrl|View Details>"
+          echo text
+          curl -X POST -H 'Content-type: application/json' --data '{"text":"$text"}'  
 
       # - uses: ravsamhq/notify-slack-action@v2
       #   with:
