@@ -6,15 +6,19 @@ on:
 
 jobs:
   on-failure:
+    name: Notify on failure
     runs-on: ubuntu-latest
     if: github.event.workflow_run.conclusion == 'failure' || github.event.workflow_run.conclusion == 'timed_out'
     steps:
-      - name: "Send Slack webhook"
+      - name: Notify Slack
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
         run: |
-          echo TODO
-
+          echo ${{github.event.workflow_run.name}}
+          echo ${{github.event.workflow_run.conclusion}}
+          echo <${{github.server_url}}/${{github.repository}}/actions/runs/${{github.event.workflow_run.id}}|View Failure>"}'  
+        
+# curl -X POST -H 'Content-type: application/json' --data '{"text":"GitHub job failure: <${{github.server_url}}/${{github.repository}}/actions/runs/${{github.event.workflow_run.id}}|View Failure>"}'  
 
       # - uses: ravsamhq/notify-slack-action@v2
       #   with:
