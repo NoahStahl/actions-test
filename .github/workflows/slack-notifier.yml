@@ -26,7 +26,7 @@ jobs:
           runUrl="${{github.server_url}}/${{github.repository}}/actions/runs/${{github.event.workflow_run.id}}"
           text="Workflow [$workflow] result was [$result]. Triggered by $user with [$commit]. <$runUrl|View Details>"
           echo text
-          curl -X POST -H 'Content-type: application/json' --data '{"text":"$text"}'  
+          curl -X POST -H 'Content-type: application/json' --data '{"text":"$text"}' https://api.slack.com 
 
       # - uses: ravsamhq/notify-slack-action@v2
       #   with:
