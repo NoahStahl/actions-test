@@ -19,11 +19,11 @@ jobs:
           WORKFLOW_CONCLUSION: ${{github.event.workflow_run.conclusion}}
           WORKFLOW_NAME: ${{github.event.workflow_run.name}}
         run: |
-          workflow=${{github.event.workflow_run.name}}
-          result=${{github.event.workflow_run.conclusion}}
-          user=${{github.event.workflow_run.head_commit.committer.name}}
-          message=${{github.event.workflow_run.head_commit.message}}
-          runUrl=${{github.server_url}}/${{github.repository}}/actions/runs/${{github.event.workflow_run.id}}
+          workflow="${{github.event.workflow_run.name}}"
+          result="${{github.event.workflow_run.conclusion}}"
+          user="${{github.event.workflow_run.head_commit.committer.name}}"
+          message="${{github.event.workflow_run.head_commit.message}}"
+          runUrl="${{github.server_url}}/${{github.repository}}/actions/runs/${{github.event.workflow_run.id}}"
           echo Workflow $workflow result was [$result]. Triggered by $user with $message. Run details: $runUrl
         
 # curl -X POST -H 'Content-type: application/json' --data '{"text":"GitHub job failure: <${{github.server_url}}/${{github.repository}}/actions/runs/${{github.event.workflow_run.id}}|View Failure>"}'  
