@@ -21,6 +21,7 @@ namespace ActionsTest.WebApp.Pages
 
         public void OnGet()
         {
+            string change = "test2";
             RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier;
         }
     }
