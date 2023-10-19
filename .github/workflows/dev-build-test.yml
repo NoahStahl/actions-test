@@ -12,7 +12,9 @@ jobs:
       - uses: actions/checkout@v3
       - name: Do thing
         run: |
-          throw "foo"
+          result=$(curl https://www.google.com/ -o /dev/stderr -w "%{http_code}")
+          [ $result -eq 200 ]
+          #throw "foo"
 
 
   # build:
