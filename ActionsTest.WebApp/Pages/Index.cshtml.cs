@@ -14,7 +14,7 @@ namespace ActionsTest.WebApp.Pages
 
         public void OnGet()
         {
-
+            var change2 = "test2";
         }
     }
 }
