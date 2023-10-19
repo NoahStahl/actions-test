@@ -14,21 +14,16 @@ jobs:
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
           GITHUB_CONTEXT: ${{ toJson(github) }}
-          COMMITTER_NAME: ${{github.event.workflow_run.head_commit.committer.name}}
-          COMMIT_MESSAGE: ${{github.event.workflow_run.head_commit.message}}
-          WORKFLOW_CONCLUSION: ${{github.event.workflow_run.conclusion}}
-          WORKFLOW_NAME: ${{github.event.workflow_run.name}}
         run: |
+          echo "$GITHUB_CONTEXT"
           workflow="${{github.event.workflow_run.name}}"
           result="${{github.event.workflow_run.conclusion}}"
           user="${{github.event.workflow_run.head_commit.committer.name}}"
           commit="${{github.event.workflow_run.head_commit.message}}"
           runUrl="${{github.server_url}}/${{github.repository}}/actions/runs/${{github.event.workflow_run.id}}"
-          text="Workflow [$workflow] result was [$result]. Triggered by $user with [$commit]. <$runUrl|View Details>"
-          data="{\"text\": \"$text\"}"
-          echo $text
-          echo $data
-          curl -X POST -H 'Content-Type: application/json' --data "$data" $SLACK_WEBHOOK_URL
+          # text="Workflow [$workflow] result was [$result]. Triggered by $user with commmit [$commit]. <$runUrl|View Details>"
+          # data="{\"text\": \"$text\"}"
+          # curl -X POST -H 'Content-Type: application/json' --data "$data" $SLACK_WEBHOOK_URL
           
       #curl -X POST -H 'Content-type: application/json' --data '{"text":"$text"}' $SLACK_WEBHOOK_URL
 
